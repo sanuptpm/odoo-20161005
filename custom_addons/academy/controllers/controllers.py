@@ -20,7 +20,6 @@ from odoo import http
 #         })
 
 # -*- coding: utf-8 -*-
-from odoo import http
 
 class Academy(http.Controller):
     @http.route('/academy/academy/', auth='public')
