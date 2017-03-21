@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- custom form view -->
+        <record model="ir.ui.view" id="pharmacies_form_view">
+            <field name="name">pharmacies.form.view</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <form string="Pharmacies Form">
+                    <sheet>
+                        <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name" string="Pharmacy Name"/>
+                            <h1>
+                                <field name="pharmacy_name" default_focus="1" string=""/>
+                            </h1>
+                            
+                            <div class="o_row">
+                                <label class="oe_edit_only" for="name" string="Pharmacist Name"/>
+                                <field name="name" placeholder="Pharmacist Name"/>
+                                <label class="oe_edit_only" for="health_centers" string="Health Center"/>
+                                <field name="health_centers" placeholder="Health Center"/>
+                            </div>
+                        </div>
+
+                        <group>
+                            <group>
+                                <label for="street" string="Address"/>
+                                <div>
+                                    <div class="o_address_format" name="div_address">
+                                        <field name="street" placeholder="Street..." class="o_address_street"/>
+                                        <field name="state_id" placeholder="State" class="o_address_state"/>
+                                        <field name="city" placeholder="City" class="o_address_city"/>
+                                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                        <field name="country_id" placeholder="Country..." class="o_address_country"/>
+                                    </div>
+                                </div>
+                                <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                            </group>
+                            <group>
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="email"/>
+                                <field name="fax"/>
+                            </group>
+                        </group>
+
+                         <notebook>
+                            <page string="Prescriptions">
+                                <field name="prescription">
+                                    <form>
+                                        <header>
+                                            <button string="Click to Invoiced" type="object" name="state_change" class="oe_highlight oe_edit_only"/>
+                                            <field name="state" widget="statusbar"/>
+                                        </header>
+                                        <sheet>
+                                            <div>
+                                                <div>
+                                                    <group>
+                                                        <group>
+                                                            <field name="prescription" string="Prescription"/>
+                                                            <field name="physician" string="Physician"/>
+                                                        </group>  
+                                                        <group>
+                                                            <field name="patient" string="Patient"/>
+                                                            <field name="total" string="Total"/>
+                                                        </group>
+                                                    </group>
+                                                </div>
+                                            </div>
+                                            <notebook>
+                                            <page string="Prescription Lines">
+                                            </page>
+                                            </notebook>
+                                        </sheet>
+                                    </form>
+                                    <tree colors="blue:state == 'draft';grey:state == 'invoiced'">
+                                        <field name="prescription" string="Prescription"/>
+                                        <field name="physician" string="Physician"/>
+                                        <field name="patient" string="Patient"/>
+                                        <field name="total" string="Total"/>
+                                        <field name="state" string="State"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Extra Information">
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- custom tree view -->
+        <record model="ir.ui.view" id="pharmacies_tree_view">
+            <field name="name">pharmacies.tree.view</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Pharmacies">
+                    <field name="name" />
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- custom kanban view -->
+        <record model="ir.ui.view" id="pharmacies_kanban_view">
+            <field name="name">pharmacies.kanban</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+               <kanban class="o_res_partner_kanban">
+              
+                    <field name="image_small"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_res_partner_kanban">
+                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                <div class="o_kanban_image">
+                                    <t t-if="record.image_small.raw_value">
+                                        <img t-att-src="kanban_image('res.partner', 'image_small', record.id.value)"/>
+                                    </t>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="oe_partner_heading"><field name="pharmacy_name"/></strong>
+                                    <ul>
+                                        <li><field name="name"/></li>
+                                        <li><field name="health_centers"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- action window -->
+        <record id="pharmacies_list_action" model="ir.actions.act_window">
+            <field name="name">Pharmacies</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first pharmacies
+                </p>
+            </field>
+        </record>
+
+        <!-- action for custom kanban view -->
+        <record id="pharmacies_list_action_kanban" model="ir.actions.act_window.view">
+            <field name="sequence" eval="0"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="pharmacies_kanban_view"/>
+            <field name="act_window_id" ref="pharmacies_list_action"/>
+        </record>
+
+        <!-- action for custom tree view -->
+        <record id="pharmacies_list_action_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="pharmacies_tree_view"/>
+            <field name="act_window_id" ref="pharmacies_list_action"/>
+        </record>
+
+        <!-- action for custom form view -->
+        <record id="pharmacies_list_action_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pharmacies_form_view"/>
+            <field name="act_window_id" ref="pharmacies_list_action"/>
+        </record>
+        
+        <!-- top level menu: no parent -->
+        <menuitem id="main_medical_menu" name="Medical"/>
+        <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+        <menuitem id="medical_menu" name="Medical" parent="main_medical_menu"/>
+        
+        <menuitem id="pharmacies" name="Pharmacies" parent="medical_menu"
+                  action="pharmacies_list_action"/>
+
+    </data>
+</odoo>
+
+
+
+
+
+
+
+

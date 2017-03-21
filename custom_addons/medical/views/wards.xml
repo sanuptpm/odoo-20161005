@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Ward form view -->
+        <record model="ir.ui.view" id="wards_form_view">
+            <field name="name">wards.form</field>
+            <field name="model">medical.wards</field>
+            <field name="arch" type="xml">
+                <form string="Ward Form">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="action" name="%(beds_form_action)d" icon="fa-bed">
+                                <field string="Beds" name="beds_count" widget="percentpie"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name" string="Ward Name"/>
+                            <h1>
+                                <field name="name" default_focus="1"/>
+                            </h1> 
+                        </div>
+                        <group>
+                            <group>    
+                                <field name="health_center" placeholder="Health Center"/>
+                                <field name="floor_number" placeholder="Floor Number"/>
+                                <field name="private_room"/>
+                            </group>
+                            <group>
+                                <field name="building" placeholder="Building"/>
+                                <field name="gender"/>
+                                <field name="bio_hazard"/>
+                            </group>
+                        </group>
+                        <div class="oe_title">
+                            <h2>Facilities</h2>
+                        </div>
+                        <group>
+                            <group>    
+                                <field name="telephone_access"/>
+                                <field name="private_bathroom"/>
+                                <field name="television"/>
+                                <field name="refrigerator"/>
+
+                            </group>
+                            <group>
+                                <field name="air_conditioning"/>
+                                <field name="guest_sofa_bed"/>
+                                <field name="internet_access"/>
+                                <field name="microwave"/>
+
+                            </group>
+                        </group>
+
+
+                         <notebook>
+                            <page string="Extra Information">
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="wards_tree_view">
+            <field name="name">wards.tree</field>
+            <field name="model">medical.wards</field>
+            <field name="arch" type="xml">
+                <tree string="Wards Tree">
+                    <field name="name"/>
+                    <field name="health_center"/>
+                    <field name="building"/>
+                    <field name="floor_number"/>
+                    <field name="gender"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- action window -->
+        <record model="ir.actions.act_window" id="ward_form_action">
+            <field name="name">Wards</field>
+            <field name="res_model">medical.wards</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first ward
+                </p>
+            </field>
+        </record>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="main_medical_menu" name="Medical"/>
+
+        <menuitem id="medical_menu" name="Medical" parent="main_medical_menu"/>
+
+        <menuitem id="medical.wards" name="Wards" parent="medical_menu"
+                  action="ward_form_action"/>
+
+    </data>
+</odoo>

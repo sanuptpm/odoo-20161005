@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_medical_buildings,access_medical_buildings,model_medical_buildings,,1,0,0,0
+access_medical_wards,access_medical_wards,model_medical_wards,,1,0,0,0
+access_medical_beds,access_medical_beds,model_medical_beds,,1,0,0,0
+access_medical_theaters,access_medical_theaters,model_medical_theaters,,1,0,0,0
+access_medical_prescription,access_medical_prescription,model_medical_prescription,,1,0,0,0

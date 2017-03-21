@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Ward form view -->
+        <record model="ir.ui.view" id="operating_theaters_form_view">
+            <field name="name">operating.theaters.form</field>
+            <field name="model">medical.theaters</field>
+            <field name="arch" type="xml">
+                <form string="Operating Theaters Form">
+                    <header>
+                        <button string="Free" type="object" name="theater_free" class="oe_highlight"/>
+                        <button string="Not Available" type="object" name="theater_not_available" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name" string="OT Name"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1> 
+                        </div>
+                        <group>
+                            <field name="building" placeholder="Building"/>
+                        </group>
+                    
+                         <notebook>
+                            <page string="Extra Information">
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="operating_theaters_tree_view">
+            <field name="name">operating.theaters.tree</field>
+            <field name="model">medical.theaters</field>
+            <field name="arch" type="xml">
+                <tree string="operating Theaters Tree" colors="green:state == 'free';red:state == 'not_available'">
+                    <field name="name"/>
+                    <field name="building"/>
+                    <field name="state" string="Status"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- action window -->
+        <record model="ir.actions.act_window" id="operating_theaters_form_action">
+            <field name="name">Operating Theaters</field>
+            <field name="res_model">medical.theaters</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first operating theater
+                </p>
+            </field>
+        </record>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="main_medical_menu" name="Medical"/>
+
+        <menuitem id="medical_menu" name="Medical" parent="main_medical_menu"/>
+
+        <menuitem id="medical.theaters" name="Operating Theaters" parent="medical_menu"
+                  action="operating_theaters_form_action"/>
+
+    </data>
+</odoo>

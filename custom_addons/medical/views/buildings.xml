@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Health centers form view -->
+        <record model="ir.ui.view" id="buildings_form_view">
+            <field name="name">buildings.form</field>
+            <field name="model">medical.buildings</field>
+            <field name="arch" type="xml">
+                <form string="Buildings Form">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="action" name="%(ward_form_action)d" icon="fa-stethoscope">
+                                <field string="Wards" name="ward_count" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" type="action" name="%(beds_form_action)d" icon="fa-bed">
+                                <field string="Beds" name="beds_count" widget="percentpie"/>
+                            </button>
+                            <button class="oe_stat_button" type="action" name="%(operating_theaters_form_action)d" icon="fa-heartbeat">
+                                <field string="Operating Theaters" name="theaters_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name" string="Building Name"/>
+                            <h1>
+                                <field name="name" default_focus="1" string=""/>
+                            </h1> 
+                        </div>
+                        <group>
+                            <group>    
+                                <field name="health_centers" placeholder="Health centers"/>   
+                            </group>
+                            <group>
+                                <field name="code" placeholder="Code"/>
+                            </group>
+                        </group>
+
+
+                         <notebook>
+                            <page string="Extra Information">
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="buildings_tree_view">
+            <field name="name">buildings.tree</field>
+            <field name="model">medical.buildings</field>
+            <field name="arch" type="xml">
+                <tree string="Buildings Tree">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="health_centers"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="building_search_view">
+            <field name="name">building.search</field>
+            <field name="model">medical.buildings</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <!-- <filter name="my_building" string="Buildings" -->
+                            <!-- domain="[('health_centers', '=', 'partner_ids')]"/> -->
+                     <!-- <filter string="My Orders" domain="[('user_id','=',uid)]" name="my_sale_orders_filter"/> -->
+
+                    <!-- <group string="Group By">
+                        <filter name="health_centers" string="Responsible"
+                                context="{'group_by': 'health_centers'}"/>
+                    </group> -->
+
+                </search>
+            </field>
+        </record>
+
+        <!-- action window -->
+        <record model="ir.actions.act_window" id="buildings_list_action">
+            <field name="name">Buildings</field>
+            <field name="res_model">medical.buildings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <!-- <field name="context">{
+                    'search_default_team_id': [active_id],
+                    'default_team_id': active_id,
+                }
+            </field> -->
+            <field name="context">{'partner_ids': active_id}</field>
+            <!-- <field name="context" eval="{'search_default_my_building': 1}"/> -->
+            <!-- <field name="domain">[('health_centers', '=', active_id)]</field> -->
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first Building
+                </p>
+            </field>
+        </record>
+        <!-- for default -->
+        <record model="ir.actions.act_window" id="buildings_list_action1">
+            <field name="name">Buildings</field>
+            <field name="res_model">medical.buildings</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first Building
+                </p>
+            </field>
+        </record>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="main_medical_menu" name="Medical"/>
+
+        <menuitem id="medical_menu" name="Medical" parent="main_medical_menu"/>
+
+        <menuitem id="buildings" name="Buildings" parent="medical_menu"
+                  action="buildings_list_action1"/>
+
+    </data>
+</odoo>

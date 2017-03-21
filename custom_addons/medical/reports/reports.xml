@@ -1,0 +1,44 @@
+<odoo>
+<data>
+    <report
+        id="report_patient"
+        model="res.partner"
+        string="Patient Card"
+        name="medical.report_patient_view"
+        file="medical.report_patient"
+        report_type="qweb-pdf" />
+
+    <template id="report_patient_view">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <!-- <t t-call="report.external_layout"> -->
+                    <div class="page">
+                        <h4 t-field="doc.name"/>
+                        <div>
+                            <strong>ID:</strong>
+                            <span t-field="doc.id"/>
+                        </div>
+                        <div>
+                            <strong>DOB:</strong>
+                            <span t-field="doc.date_of_birth"/>
+                        </div>
+                        <div>
+                            <strong>Age:</strong>
+                            <span t-field="doc.patient_age"/>
+                        </div>
+                        <div>
+                            <strong>Gender:</strong>
+                            <span t-field="doc.gender"/>
+                        </div>
+                        <div>
+                            <strong>Marital Status:</strong>
+                            <span t-field="doc.marital_status"/>
+                        </div>
+                       
+                    </div>
+                <!-- </t> -->
+            </t>
+        </t>
+    </template>
+</data>
+</odoo>

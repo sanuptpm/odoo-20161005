@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Ward form view -->
+        <record model="ir.ui.view" id="beds_form_view">
+            <field name="name">beds.form</field>
+            <field name="model">medical.beds</field>
+            <field name="arch" type="xml">
+                <form string="Beds Form">
+                     <header>
+                        <button string="Free" type="object" name="bed_free" class="oe_highlight oe_edit_only"/>
+                        <button string="Reserved" type="object" name="bed_reserved" class="oe_highlight oe_edit_only"/>
+                        <button string="Occupied" type="object" name="bed_occupied" class="oe_highlight oe_edit_only"/>
+                        <button string="Not Available" type="object" name="bed_not_available" class="oe_highlight oe_edit_only"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    
+                    <sheet>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name" string="Bed Name"/>
+                            <h1>
+                                <field name="name" default_focus="1"/>
+                            </h1> 
+                        </div>
+                        <group>
+                            <group>    
+                                <field name="health_center" placeholder="Health Center"/>
+                                <field name="telephone_number" placeholder="Telephone Number"/>
+                                <field name="reservation_charge" placeholder="reservation_charge"/>
+                            </group>
+                            <group>
+                                <field name="building" placeholder="Building"/>
+                                <field name="ward" placeholder="Ward"/>
+                                <field name="bed_type"/>
+                            </group>
+                        </group>
+                        <div class="oe_title">
+                            <h3>Bed Status</h3>
+                        </div>
+                        <field name="change_bed_status"/>
+                         <notebook>
+                            <page string="Extra Information">
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="beds_tree_view">
+            <field name="name">beds.tree</field>
+            <field name="model">medical.beds</field>
+            <field name="arch" type="xml">
+                <tree string="Beds Tree" colors="green:state == 'free';red:state == 'occupied';grey:state == 'reserved';blue:state == 'not_available'">
+                    <field name="name"/>
+                    <field name="ward"/>
+                    <field name="health_center"/>
+                    <field name="building"/>
+                    <field name="bed_type"/>
+                    <field name="telephone_number"/>
+                    <field name="state" string="Status"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- action window -->
+        <record model="ir.actions.act_window" id="beds_form_action">
+            <field name="name">Beds</field>
+            <field name="res_model">medical.beds</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first bed
+                </p>
+            </field>
+        </record>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="main_medical_menu" name="Medical"/>
+
+        <menuitem id="medical_menu" name="Medical" parent="main_medical_menu"/>
+
+        <menuitem id="medical.beds" name="Beds" parent="medical_menu"
+                  action="beds_form_action"/>
+
+    </data>
+</odoo>
