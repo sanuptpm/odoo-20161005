@@ -6,5 +6,3 @@ class Academy(http.Controller):
     def index(self, **kw):
         return "Hello, world"
 
-#     @http.route('/academy/academy/objects/', auth='public')
-#     def list(self, **kw):
