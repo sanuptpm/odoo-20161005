@@ -38,7 +38,7 @@
                 <div class="oe_structure">
                     <div class="container">
                         <t t-foreach="teachers" t-as="teacher">
-                            <p><t t-esc="teacher"/></p>
+                            <p><t t-esc="teacher.id"/> <t t-esc="teacher.name"/></p>
                         </t>
                     </div>
                 </div>
