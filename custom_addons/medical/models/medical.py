@@ -3,8 +3,6 @@
 from odoo import models, fields, api
 import datetime
 
-
-
 class HealthCenters(models.Model):
     _inherit = 'res.partner'
 

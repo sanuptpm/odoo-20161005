@@ -5,3 +5,4 @@ access_medical_wards,access_medical_wards,model_medical_wards,,1,0,0,0
 access_medical_beds,access_medical_beds,model_medical_beds,,1,0,0,0
 access_medical_theaters,access_medical_theaters,model_medical_theaters,,1,0,0,0
 access_medical_prescription,access_medical_prescription,model_medical_prescription,,1,0,0,0
+access_medical_admissions,access_medical_admissions,model_medical_admissions,,1,0,0,0
