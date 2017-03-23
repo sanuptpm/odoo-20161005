@@ -2,20 +2,20 @@
 <odoo>
     <data>
         <!-- form view -->
-        <record model="ir.ui.view" id="admission_form_view">
-            <field name="name">admissions.form</field>
-            <field name="model">medical.admissions</field>
+        <record model="ir.ui.view" id="patient_form_view">
+            <field name="name">patient.invoice.form</field>
+            <field name="model">medical.patient.invoice</field>
             <field name="arch" type="xml">
-                <form string="Admissions Form">
+                <form string="Patient Invoice Form">
                     <header>
-                        <button string="Admit Now" type="object" name="state_hospitalized" class="oe_highlight"/>
+                        <!-- <button string="Admit Now" type="object" name="state_hospitalized" class="oe_highlight"/>
                         <button string="Discharge" type="object" name="state_discharge" class="oe_highlight"/>
                         <button string="Invoice" type="object" name="state_invoiced" class="oe_highlight"/>
 
-                        <field name="state" widget="statusbar"/>
+                        <field name="state" widget="statusbar"/> -->
                     </header>
                     <sheet>
-                        <div class="oe_title">
+                        <!-- <div class="oe_title">
                             <label class="oe_edit_only" for="id" string="Inpatient"/>
                             <h1>
                                 <field name="id"/>
@@ -23,25 +23,20 @@
                         </div>
                         <group>
                             <field name="patient" placeholder="Patient"/>
-                        </group>
+                        </group> -->
 
                         <group>
                             <group>
-                                <field name="reason_for_dmission"/>
-                                <field name="ward"/>
-                                <field name="bed"/>
-                                <field name="admission_type"/>
+                                <!-- <field name="patient"/> -->
+                                <field name="reservation_charge"/>
                             </group>
                         
                             <group>
-                                <field name="attending_physician"/>
-                                <field name="operating_physician"/>
-                                <field name="queue"/>
-                                <field name="theaters"/>
+                                <!-- <field name="consultancy_charge"/> -->
                             </group>
                         </group>
 
-                        <div class="oe_title">
+                        <!-- <div class="oe_title">
                             <h2>Dates</h2>
                         </div>
                         <group>
@@ -51,14 +46,14 @@
                             <group>
                                 <field name="discharge_date"/>
                             </group>
-                        </group>
+                        </group> -->
                                             
                         <notebook>
                             <page string="Extra Information">
                                 <group>
-                                    <field name="condition_before_admission"/>
+                                    <!-- <field name="condition_before_admission"/>
                                     <field name="nursing_plan"/>
-                                    <field name="discharge_plan"/>
+                                    <field name="discharge_plan"/> -->
                                 </group>
                             </page>
                         </notebook>
@@ -69,29 +64,29 @@
 
         <record model="ir.ui.view" id="admisssion_tree_view">
             <field name="name">admission.tree</field>
-            <field name="model">medical.admissions</field>
+            <field name="model">medical.patient.invoice</field>
             <field name="arch" type="xml">
-                <tree string="Admission Tree" colors="green:state == 'draft';red:state == 'hospitalized'">
+                <tree string="Admission Tree">
                     <field name="id"/>
-                    <field name="patient"/>
+                    <!-- <field name="patient"/>
                     <field name="reason_for_dmission"/>
                     <field name="ward"/>
                     <field name="bed"/>
                     <field name="hospitalization_date"/>
                     <field name="discharge_date"/>
-                    <field name="state"/>
+                    <field name="state"/> -->
                 </tree>
             </field>
         </record>
 
         <!-- action window -->
-        <record model="ir.actions.act_window" id="admisssion_form_action">
-            <field name="name">Admisssion</field>
-            <field name="res_model">medical.admissions</field>
+        <record model="ir.actions.act_window" id="patient_invoice_form_action">
+            <field name="name">Patient Invoice</field>
+            <field name="res_model">medical.patient.invoice</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,kanban</field>
             <field name="help" type="html">
-                <p class="oe_view_nocontent_create">Create the first Admisssion
+                <p class="oe_view_nocontent_create">Create the first Invoice
                 </p>
             </field>
         </record>
@@ -101,8 +96,8 @@
 
         <menuitem id="patient_menu1" name="Admisssion Management " parent="main_medical_menu"/>
         
-        <menuitem id="admission_menu" name="Admisssion" parent="patient_menu1"
-                  action="admisssion_form_action"/>
+        <menuitem id="patient_invoice_menu" name="Patient Invoice" parent="patient_menu1"
+                  action="patient_invoice_form_action"/>
 
     </data>
 </odoo>

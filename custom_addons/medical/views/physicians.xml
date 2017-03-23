@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- custom form view -->
+        <record model="ir.ui.view" id="physicians_form_view">
+            <field name="name">physicians.form.view</field>
+            <field name="model">medical.physicians</field>
+            <field name="arch" type="xml">
+                <form string="physicians Form">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            
+                            <button class="oe_stat_button" type="action" name="" icon="fa-truck">
+                                <field string="Appointments" name="name" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" type="action" name="" icon="fa-truck">
+                                <field string="Prescriptions" name="name" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name" string="Name"/>
+                            <h1>
+                                <field name="name" default_focus="1" string=""/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="degree"/>
+                                <field name="graduation_institute"/>
+                            </group>
+                            <group>
+                                <field name="consultancy_type"/>
+                                <field name="consultancy_charge"/>
+                                <field name="licence_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="General">
+                                <form>
+                                    <sheet>
+                                        <group string="Contact Information">
+                                            <group>
+                                                <field name="working_institution"/>
+                                                <field name="work_mobile"/>
+                                                <field name="work_email"/>
+                                            </group>
+                                            <group>
+                                                <field name="responsible"/>
+                                                <field name="work_phone"/>
+                                                <field name="work_location"/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </page>
+
+                            <page string="Weekly Availability">
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </page>
+
+                            <page string="Extra Info">
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </page>
+
+                            <page string="Walkin Schdule">
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </page>
+                            
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- custom tree view -->
+        <record model="ir.ui.view" id="physicians_tree_view">
+            <field name="name">physicians.tree.view</field>
+            <field name="model">medical.physicians</field>
+            <field name="arch" type="xml">
+                <tree string="physicians">
+                    <field name="name" />   
+                </tree>
+            </field>
+        </record>
+
+        <!-- custom kanban view -->
+        <record model="ir.ui.view" id="physicians_kanban_view">
+            <field name="name">physicians.kanban</field>
+            <field name="model">medical.physicians</field>
+            <field name="arch" type="xml">
+               <kanban class="o_res_partner_kanban">
+                    <field name="image"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_res_partner_kanban">
+                                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                <div class="o_kanban_image">
+                                    <!-- <field name="name"/> -->
+                                    <t t-if="record.image.raw_value">
+                                        <img t-att-src="kanban_image('medical.physicians', 'image', record.id.value)"/>
+                                    </t>   
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="oe_partner_heading"><field name="name"/></strong>
+                                    <ul>
+                                        <li><field name="work_mobile"/></li>
+                                        <li><field name="work_email"/></li>
+                                    </ul>
+                                </div>
+                            </div>    
+                        </t>
+                    </templates>
+
+                </kanban>
+            </field>
+        </record>
+
+        <!-- form view for the file upload -->
+        <!-- <record model="ir.ui.view" id="upload_form_view">
+            <field name="name">file.form.view</field>
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <form string="Upload Files">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field string="Attachment Name " name="name"/>
+                                <field string="Type" name="type"/>
+                                <field string="File Content" name="datas"/>
+                            </group>
+                            <group>
+                                <field string="Mime Type" name="mimetype"/>
+                                
+                            </group>
+                        </group>
+                        <label for="description" string="Description"/>
+                        <field name="description"/>
+                    </sheet>
+                </form>
+            </field>
+        </record> -->
+
+        <!-- tree view for the file upload -->
+        <!-- <record model="ir.ui.view" id="upload_tree_view">
+            <field name="name">upload.tree.view</field>
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <tree string="physicians">
+                    <field string="Attachment Name " name="name"/>
+                    <field string="Type" name="type"/>
+                    <field string="File Content" name="datas"/>
+                    <field string="Mime Type" name="mimetype"/>
+                    <field string="Owner" name="create_uid"/>
+                    <field string="Date Created" name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+ -->
+        <!-- action window -->
+        <record id="physicians_list_action" model="ir.actions.act_window">
+            <field name="name">physicians</field>
+            <field name="res_model">medical.physicians</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first physicians
+                </p>
+            </field>
+        </record>
+
+        <!-- action for custom kanban view -->
+        <record id="physicians_list_action_kanban" model="ir.actions.act_window.view">
+            <field name="sequence" eval="0"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="physicians_kanban_view"/>
+            <field name="act_window_id" ref="physicians_list_action"/>
+        </record>
+
+        <!-- action for custom tree view -->
+        <!-- <record id="physicians_list_action_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="physicians_tree_view"/>
+            <field name="act_window_id" ref="physicians_list_action"/>
+        </record> -->
+
+        <!-- action for custom form view -->
+        <!-- <record id="physicians_list_action_form" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="physicians_form_view"/>
+            <field name="act_window_id" ref="physicians_list_action"/>
+        </record> -->
+        
+        <!-- top level menu: no parent -->
+        <menuitem id="main_medical_menu" name="Medical"/>
+        <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+        <menuitem id="physician_menu1" name="Physicians and Appointments" parent="main_medical_menu"/>
+        
+        <menuitem id="physician_menu" name="physicians" parent="physician_menu1"
+                  action="physicians_list_action"/>
+
+    </data>
+</odoo>
+
+
+
+
+
+
+
+

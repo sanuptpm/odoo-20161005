@@ -35,7 +35,10 @@
         'views/pharmacies.xml',
         'views/patients.xml',
         'views/admission.xml',
+        'views/physicians.xml',
+        'views/patient_invoice.xml',
         'reports/reports.xml',
+        'reports/invoice_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

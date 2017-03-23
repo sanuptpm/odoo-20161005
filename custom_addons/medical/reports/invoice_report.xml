@@ -1,0 +1,27 @@
+<odoo>
+<data>
+    <report
+        id="report_invoice"
+        model="res.partner"
+        string="Invoice"
+        name="medical.report_invoice_view"
+        file="medical.report_invoice"
+        report_type="qweb-pdf" />
+
+    <template id="report_invoice_view">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <!-- <t t-call="report.external_layout"> -->
+                    <div class="page">
+                        <!-- <h4 t-field="doc.name"/> -->
+                        <div>
+                            <strong>ID:</strong>
+                            <span t-field="doc.id"/>
+                        </div>
+                    </div>
+                <!-- </t> -->
+            </t>
+        </t>
+    </template>
+</data>
+</odoo>

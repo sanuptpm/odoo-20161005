@@ -47,6 +47,7 @@ class Wards(models.Model):
     _name = 'medical.wards'
 
     name = fields.Char(string="Ward Name")
+    # image = fields.Boolean()
     health_center = fields.Many2one('res.partner', string="Health Center")
     floor_number = fields.Char(string="Floor Number")
     private_room = fields.Boolean(string="Private Room")
@@ -85,7 +86,7 @@ class Beds(models.Model):
     name = fields.Char(string="Bed Name")
     health_center = fields.Many2one('res.partner', string="Health Center")
     telephone_number = fields.Char(string="Telephone Number")
-    reservation_charge = fields.Char(string="Reservation Charge")
+    reservation_charge = fields.Char(string="Reservation Charge", default=100)
     building = fields.Many2one('medical.buildings', string="Building")
     ward = fields.Many2one('medical.wards', string="Ward")
     bed_type = fields.Selection([
@@ -247,7 +248,7 @@ class Admissions(models.Model):
     theaters = fields.Many2one('medical.theaters', string="Operating Theater")
     admission_type = fields.Char(string="Admission Type")
     attending_physician = fields.Char(string="Attending Physician")
-    operating_physician = fields.Char(string="Operating Physician")
+    operating_physician = fields.Many2one('medical.physicians', string="Operating Physician")
     queue = fields.Char(string="Queue")
     hospitalization_date = fields.Datetime(string="Hospitalization Date")
     discharge_date = fields.Datetime(string="Discharge Date")
@@ -261,11 +262,22 @@ class Admissions(models.Model):
         ], default='draft')
 
     @api.one
-    def state_change(self):
+    def state_hospitalized(self):
         self.write({
             'state': 'hospitalized',
             })
 
+    @api.one
+    def state_invoiced(self):
+        self.write({
+            'state': 'invoiced'
+            })
+
+    @api.one
+    def state_discharge(self):
+        self.write({
+            'state': 'discharge'
+            })
 
     # Remarks     
     # DM  
@@ -298,3 +310,29 @@ class Admissions(models.Model):
     # Remarks     
     # Last PAP smear  
     # Remarks     
+
+class Physicians(models.Model):
+    _name = 'medical.physicians'
+
+    name = fields.Char(string="Physician Name")
+    image = fields.Binary("Image", attachment=True)
+    speciality = fields.Char()
+    degree = fields.Char(string="Degrees")
+    graduation_institute = fields.Char(string="Graduation Institute")
+    consultancy_type = fields.Char(string="Consultancy Type")
+    consultancy_charge = fields.Char(string="Consultancy Charge", default=100)
+    licence_id = fields.Char(string="Licence ID")
+    working_institution = fields.Char(string="Working Institution")
+    work_mobile = fields.Char(string="Work Mobile")
+    work_email = fields.Char(string="Work Email")
+    responsible = fields.Char(string="Responsible")
+    work_phone = fields.Char(string="Work Phone")
+    work_location = fields.Char(string="Work Location")
+
+class PatientInvoice(models.Model):
+    _name = 'medical.patient.invoice'
+    reservation_charge = fields.Char(string="Reservation Charge")
+
+    # reservation_charge = fields.Many2one('medical.beds', string="Reservation Charge")
+    # consultancy_charge = fields.Many2one('medical.physicians', string="Consultancy Charge")
+    # patient = fields.Many2one('res.partner', string="Patient Name")

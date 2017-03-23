@@ -10,6 +10,7 @@
                     <header>
                         <!-- click button for generating print -->
                         <button name="%(report_patient)d" string="Patient Card" type="action" class="oe_highlight"/>
+                        <button name="%(report_invoice)d" string="Invoices" type="action" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
@@ -23,10 +24,10 @@
                             <button class="oe_stat_button" type="action" name="" icon="fa-truck">
                                 <field string="Vaccines" name="name" widget="statinfo"/>
                             </button>
-                            <button class="oe_stat_button" type="action" name="" icon="fa-truck">
+                            <button class="oe_stat_button" type="action" name="%(admisssion_form_action)d" icon="fa-truck">
                                 <field string="Admissions" name="name" widget="statinfo"/>
                             </button>
-                            <button class="oe_stat_button" type="action" name="" icon="fa-truck">
+                            <button class="oe_stat_button" type="action" name="%(patient_invoice_form_action)d" icon="fa-truck">
                                 <field string="Invoices" name="name" widget="statinfo"/>
                             </button>
                         </div>
