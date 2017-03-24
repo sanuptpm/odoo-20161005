@@ -81,14 +81,9 @@
             <field name="res_model">medical.buildings</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,kanban</field>
-            <!-- <field name="context">{
-                    'search_default_team_id': [active_id],
-                    'default_team_id': active_id,
-                }
-            </field> -->
+           
             <field name="context">{'partner_ids': active_id}</field>
-            <!-- <field name="context" eval="{'search_default_my_building': 1}"/> -->
-            <!-- <field name="domain">[('health_centers', '=', active_id)]</field> -->
+            
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Create the first Building
                 </p>
