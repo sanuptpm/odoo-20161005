@@ -4,7 +4,7 @@
         <!-- form view -->
         <record model="ir.ui.view" id="patient_form_view">
             <field name="name">patient.invoice.form</field>
-            <field name="model">medical.patient.invoice</field>
+            <field name="model">medical.invoice</field>
             <field name="arch" type="xml">
                 <form string="Patient Invoice Form">
                     <header>
@@ -15,6 +15,10 @@
                         <field name="state" widget="statusbar"/> -->
                     </header>
                     <sheet>
+                        <field name="id"/>
+                        <field name="reservation_charge"/>
+                    </sheet>
+                    <!-- <sheet> -->
                         <!-- <div class="oe_title">
                             <label class="oe_edit_only" for="id" string="Inpatient"/>
                             <h1>
@@ -25,16 +29,16 @@
                             <field name="patient" placeholder="Patient"/>
                         </group> -->
 
-                        <group>
-                            <group>
+                        <!-- <group>
+                            <group> -->
                                 <!-- <field name="patient"/> -->
-                                <field name="reservation_charge"/>
-                            </group>
+                                
+                            <!-- </group>
                         
-                            <group>
+                            <group> -->
                                 <!-- <field name="consultancy_charge"/> -->
-                            </group>
-                        </group>
+                            <!-- </group>
+                        </group> -->
 
                         <!-- <div class="oe_title">
                             <h2>Dates</h2>
@@ -48,26 +52,27 @@
                             </group>
                         </group> -->
                                             
-                        <notebook>
-                            <page string="Extra Information">
-                                <group>
+                        <!-- <notebook> -->
+                            <!-- <page string="Extra Information"> -->
+                                <!-- <group> -->
                                     <!-- <field name="condition_before_admission"/>
                                     <field name="nursing_plan"/>
                                     <field name="discharge_plan"/> -->
-                                </group>
-                            </page>
-                        </notebook>
-                    </sheet>
+                                <!-- </group> -->
+                            <!-- </page> -->
+                        <!-- </notebook> -->
+                    <!-- </sheet> -->
                 </form>
             </field>
         </record>
 
         <record model="ir.ui.view" id="admisssion_tree_view">
             <field name="name">admission.tree</field>
-            <field name="model">medical.patient.invoice</field>
+            <field name="model">medical.invoice</field>
             <field name="arch" type="xml">
                 <tree string="Admission Tree">
                     <field name="id"/>
+                    <field name="reservation_charge"/>
                     <!-- <field name="patient"/>
                     <field name="reason_for_dmission"/>
                     <field name="ward"/>
@@ -82,7 +87,7 @@
         <!-- action window -->
         <record model="ir.actions.act_window" id="patient_invoice_form_action">
             <field name="name">Patient Invoice</field>
-            <field name="res_model">medical.patient.invoice</field>
+            <field name="res_model">medical.invoice</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,kanban</field>
             <field name="help" type="html">

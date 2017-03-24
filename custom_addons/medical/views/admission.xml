@@ -13,6 +13,9 @@
                         <button string="Invoice" type="object" name="state_invoiced" class="oe_highlight"/>
 
                         <field name="state" widget="statusbar"/>
+                        <!-- <button name="%(patient_invoice_form_action)d" string="Invoice Now" type="action" class="oe_highlight"/> -->
+
+                         <button name="get_upd" string="Update" type="object" context="{'id':'id'}"/>
                     </header>
                     <sheet>
                         <div class="oe_title">

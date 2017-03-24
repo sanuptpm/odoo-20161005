@@ -279,6 +279,25 @@ class Admissions(models.Model):
             'state': 'discharge'
             })
 
+    @api.multi
+    def get_upd(self):
+        base_url = self.env['medical.invoice']
+        base_url.create({'reservation_charge': self.bed.reservation_charge})
+
+
+
+    #  def get_update(self, cr, uid, ids, context='ship_id'):
+    #     ship = self.browse(cr, uid, ids, context=context)
+    #     val = ship.ship_id.imo
+    #     line = self.pool.get('sale.order_line')
+    #     self.write(cr, uid, ids, {line.ship_no: val})
+    #     return True
+
+    # @api.one
+    # def invoice_crt(self):
+    #     self.env['medical.invoice'].create({'p_obj': 'TransID'})
+    #     print "===========", self.env['medical.invoice']
+
     # Remarks     
     # DM  
     # Remarks     
@@ -330,8 +349,21 @@ class Physicians(models.Model):
     work_location = fields.Char(string="Work Location")
 
 class PatientInvoice(models.Model):
-    _name = 'medical.patient.invoice'
+    _name = 'medical.invoice'
+    # _inherit = 'medical.admissions'
+
     reservation_charge = fields.Char(string="Reservation Charge")
+    # product_id = product_obj.create(cr, uid, {'name': 'My product'})
+    
+
+    # res_charge = self.pool.get('medical.admissions')
+    # reservation_charge = res_charge.create(cr, uid, {'name': 'My product'})
+
+    # res_charge = fields.Many2one('medical.admissions', string="reservation_charge")
+    # reservation_charge = fields.Integer(string="reservation_charge", 
+    #     store=True, readonly=True, related="res_charge.id")
+    
+    # reservation_charge = self.pool.get('medical.physicians')
 
     # reservation_charge = fields.Many2one('medical.beds', string="Reservation Charge")
     # consultancy_charge = fields.Many2one('medical.physicians', string="Consultancy Charge")
