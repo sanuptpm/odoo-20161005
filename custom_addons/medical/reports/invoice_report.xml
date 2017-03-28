@@ -2,64 +2,12 @@
 <odoo>
 <data>
     <report
-        id="Medical Invoice"
+        id="medical_invoice"
         model="medical.invoice"
         string="Invoice"
         name="medical.medical_invoice_view"
         file="medical.report_invoice"
         report_type="qweb-pdf" />
-    <!-- <template id="medical_invoice_view"> -->
-        <!-- <t t-call="report.html_container"> -->
-           <!--  <t t-foreach="docs" t-as="doc">
-                <t t-call="report.external_layout">
-                    <div class="page">
-                        <h4 t-field="doc.id"/>
-                        <div>
-                            <strong>ID:</strong>
-                            <span t-field="doc.patient"/>
-                        </div>
-                        <div>
-                            <strong>Hospitalization Date:</strong>
-                            <span t-field="doc.hospitalization_date"/>
-                        </div>
-                        <div>
-                            <strong>Discharge Date:</strong>
-                            <span t-field="doc.discharge_date"/>
-                        </div>
-                        <div>
-                            <strong>Reservation Charge:</strong>
-                            <span t-field="doc.reservation_charge"/>
-                        </div>
-                        <div>
-                            <strong>Days:</strong>
-                            <span t-field="doc.days"/>
-                        </div>
-                        <div>
-                            <strong>Untaxed Amount:</strong>
-                            <span t-field="doc.untaxed_amount"/>
-                        </div>
-                        <div>
-                            <strong>Tax:</strong>
-                            <span t-field="doc.tax"/>
-                        </div>
-                        <div>
-                            <strong>Total:</strong>
-                            <span t-field="doc.total"/>
-                        </div>
-
-                    </div>
-                </t>
-            </t> -->
-        <!-- </t> -->
-        <!-- <table class="table table-condensed">
-            <thead>
-                <tr>
-                    <th>Description</th>    
-                </tr>
-            </thead>
-        </table> -->
-        
-    <!-- </template> -->
 
     <template id="medical_invoice_view">
         <t t-foreach="docs" t-as="doc">
@@ -127,8 +75,6 @@
         </div>
         
         </div>
-
-        
 
         </t>
         </t>
