@@ -14,7 +14,7 @@
 
                         <field name="state" widget="statusbar"/>
 
-                         <button name="get_upd" string="Update" type="object" context="{'id':'id'}"/>
+                         <button name="get_upd" string="Create Invoice" type="object" context="{'id':'id'}"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
