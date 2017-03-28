@@ -18,5 +18,47 @@
         <!--     </t> -->
         <!--   </dl> -->
         <!-- </template> -->
+        <!-- <template id="index">
+            <title>Academy</title>
+            <t t-foreach="teachers" t-as="teacher">
+              <p><t t-esc="teacher"/></p>
+            </t>
+        </template> -->
+
+        <!-- <template id="index">
+            <title>Academy</title>
+            <t t-foreach="teachers" t-as="teacher">
+              <p><t t-esc="teacher"/></p>
+            </t>
+        </template> -->
+
+        <template id="index">
+            <t t-call="website.layout">
+                <t t-set="title">Academy</t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <t t-foreach="teachers" t-as="teacher">
+                            <p><t t-esc="teacher.id"/> <t t-esc="teacher.name"/></p>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
     </data>
 </odoo>
+
+<!-- 
+<template id="index">
+            <t t-call="website.layout">
+                <t t-set="title">Academy</t>
+                <div class="oe_structure">
+                    <div class="container">
+                        <t t-foreach="teachers" t-as="teacher">
+                            <p><t t-esc="teacher.id"/> <t t-esc="teacher.name"/></p>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template> -->

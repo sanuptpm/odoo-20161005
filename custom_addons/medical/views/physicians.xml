@@ -182,7 +182,6 @@
                 </tree>
             </field>
         </record>
-
  -->
         <!-- action window -->
         <record id="physicians_list_action" model="ir.actions.act_window">
@@ -231,11 +230,3 @@
 
     </data>
 </odoo>
-
-
-
-
-
-
-
-
