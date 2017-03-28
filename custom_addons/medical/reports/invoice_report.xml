@@ -1,26 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <data>
     <report
-        id="report_invoice"
-        model="res.partner"
+        id="Medical Invoice"
+        model="medical.invoice"
         string="Invoice"
-        name="medical.report_invoice_view"
+        name="medical.medical_invoice_view"
         file="medical.report_invoice"
         report_type="qweb-pdf" />
-
-    <template id="report_invoice_view">
-        <t t-call="report.html_container">
-            <t t-foreach="docs" t-as="doc">
-                <!-- <t t-call="report.external_layout"> -->
+    <!-- <template id="medical_invoice_view"> -->
+        <!-- <t t-call="report.html_container"> -->
+           <!--  <t t-foreach="docs" t-as="doc">
+                <t t-call="report.external_layout">
                     <div class="page">
-                        <!-- <h4 t-field="doc.name"/> -->
+                        <h4 t-field="doc.id"/>
                         <div>
                             <strong>ID:</strong>
-                            <span t-field="doc.id"/>
+                            <span t-field="doc.patient"/>
                         </div>
+                        <div>
+                            <strong>Hospitalization Date:</strong>
+                            <span t-field="doc.hospitalization_date"/>
+                        </div>
+                        <div>
+                            <strong>Discharge Date:</strong>
+                            <span t-field="doc.discharge_date"/>
+                        </div>
+                        <div>
+                            <strong>Reservation Charge:</strong>
+                            <span t-field="doc.reservation_charge"/>
+                        </div>
+                        <div>
+                            <strong>Days:</strong>
+                            <span t-field="doc.days"/>
+                        </div>
+                        <div>
+                            <strong>Untaxed Amount:</strong>
+                            <span t-field="doc.untaxed_amount"/>
+                        </div>
+                        <div>
+                            <strong>Tax:</strong>
+                            <span t-field="doc.tax"/>
+                        </div>
+                        <div>
+                            <strong>Total:</strong>
+                            <span t-field="doc.total"/>
+                        </div>
+
                     </div>
-                <!-- </t> -->
-            </t>
+                </t>
+            </t> -->
+        <!-- </t> -->
+        <!-- <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Description</th>    
+                </tr>
+            </thead>
+        </table> -->
+        
+    <!-- </template> -->
+
+    <template id="medical_invoice_view">
+        <t t-foreach="docs" t-as="doc">
+        <t t-call="report.external_layout">
+        <div class="page">
+
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th class="text-right">ID</th>
+                    <th class="text-right">Hospitalization Date</th>
+                    <th class="text-right">Discharge Date</th>
+                    <th class="text-right">Reservation Charge</th>
+                    <th class="text-right">Days</th>
+                </tr>
+            </thead>
+            <tbody class="invoice_tbody">
+                <t t-foreach="docs" t-as="doc">
+                    <tr>
+                        <td class="text-right">
+                            <span t-field="doc.id"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="doc.patient"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="doc.hospitalization_date"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="doc.discharge_date"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="doc.days"/>
+                        </td>
+                    </tr>
+
+                    
+                </t>
+            </tbody>
+        </table>
+
+        <div class="row" name="total">
+            <div class="col-xs-4 pull-right">
+                <table class="table table-condensed">
+                    <tr class="border-black">
+                        <td><strong>Total Without Taxes</strong></td>
+                        <td class="text-right">
+                            <span t-field="doc.untaxed_amount"/>
+                        </td>
+                    </tr>
+                    <tr class="border-black">
+                        <td><strong>Taxes</strong></td>
+                        <td class="text-right">
+                            <span t-field="doc.tax"/>
+                        </td>
+                    </tr>
+                    <tr class="border-black">
+                        <td><strong>Total</strong></td>
+                        <td class="text-right">
+                            <span t-field="doc.total"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        </div>
+
+        
+
+        </t>
         </t>
     </template>
 </data>

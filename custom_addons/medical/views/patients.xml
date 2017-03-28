@@ -10,7 +10,7 @@
                     <header>
                         <!-- click button for generating print -->
                         <button name="%(report_patient)d" string="Patient Card" type="action" class="oe_highlight"/>
-                        <button name="%(report_invoice)d" string="Invoices" type="action" class="oe_highlight"/>
+                        
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
