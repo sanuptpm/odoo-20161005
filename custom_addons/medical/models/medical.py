@@ -308,32 +308,32 @@ class Physicians(models.Model):
 
 class PatientInvoice(models.Model):
     _name = 'medical.invoice'
-    # _inherit = 'medical.admissions'
+    
     patient = fields.Char(string="Patient Name")
-    hospitalization_date = fields.Char(string="Hospitalization Date", default=datetime.datetime.now())
-    discharge_date = fields.Char(string="Discharge Date", default=datetime.datetime.now())
+    hospitalization_date = fields.Char(string="Hospitalization Date")
+    discharge_date = fields.Char(string="Discharge Date")
     reservation_charge = fields.Float(string="Reservation Charge")
-    days = fields.Integer(compute='_change', default=1)
+    days = fields.Integer(compute='_change')
     untaxed_amount = fields.Integer(compute='_untax', string="Untaxed Amount")
     tax = fields.Integer(compute='_untax', default=2)
     total =fields.Integer(compute='_untax', default=1, string="Toatal")
     doh = datetime.datetime.now()
     dod = datetime.datetime.now()
+
     @api.depends()
     def _untax(self):
-        self.untaxed_amount = self.reservation_charge * self.days
-        self.tax = self.reservation_charge*2/100
-        self.total = self.untaxed_amount + self.tax
-
+        for x in self:
+            x.untaxed_amount = x.reservation_charge * x.days
+            x.tax = x.reservation_charge*2/100
+            x.total = x.untaxed_amount + x.tax
 
     @api.depends()
     def _change(self):
-        doh = self.hospitalization_date
-        dod = self.discharge_date
-        doh1 = datetime.datetime.strptime(doh, '%Y-%m-%d %H:%M:%S')
-        dod1 = datetime.datetime.strptime(dod, '%Y-%m-%d %H:%M:%S')
+        for l in self:
+            doh1 = datetime.datetime.strptime(l.hospitalization_date, '%Y-%m-%d %H:%M:%S')
+            dod1 = datetime.datetime.strptime(l.discharge_date, '%Y-%m-%d %H:%M:%S')
 
-        if int(doh1.strftime('%d')) == int(dod1.strftime('%d')):
-            self.days = 1 
-        else:
-            self.days = int(dod1.strftime('%d')) - int(doh1.strftime('%d'))
+            if int(doh1.strftime('%d')) == int(dod1.strftime('%d')):
+                l.days = 1 
+            else:
+                l.days = int(dod1.strftime('%d')) - int(doh1.strftime('%d'))
