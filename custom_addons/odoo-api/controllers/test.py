@@ -12,4 +12,3 @@ class MyController(http.Controller):
         for x in myobj:
             print "======res.partner==name=====", x.name
         return "ok"
-        
