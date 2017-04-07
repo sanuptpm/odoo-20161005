@@ -99,11 +99,19 @@ class MyController(http.Controller):
         common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
         uid = common.authenticate(db, username, password, {})
         models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
+        users_ids = models.execute_kw(db, uid, password, 'res.users', 'search_read', 
+            [[['id', '=', uid]]], 
+            {'fields': ['session'], 'limit': 1})
+        print "=====session====", users_ids
+        if users_ids[0]['session'] == False:
+            print "=======Hai==========="
+            msg = "Login To Access Data"
+        else:
+            msg = "SUCCESS"
+        # partner_ids = models.execute_kw(db, uid, password, 'res.partner', 
+            # 'search', [[['is_company', '=', True], ['customer', '=', True]]])
 
-        partner_ids = models.execute_kw(db, uid, password, 'res.partner', 
-            'search', [[['is_company', '=', True], ['customer', '=', True]]])
-
-        return partner_ids
+        return {"status": 0, "message": msg, "data": [users_ids]}
     
     @http.route('/log_out', type='json', methods=['POST'], auth='user', csrf=True)
     def log_out(self, **args):
