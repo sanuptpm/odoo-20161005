@@ -45,6 +45,7 @@ class MyController(http.Controller):
         new_user_id = models.execute_kw(db, uid, password, 'res.users', 'create', [{'name':new_name, 'login':new_login, 'new_password':new_password}])
         
         return {"status": 0, "message": new_user_id, "data": []}
+
     # http://localhost:8000/res_partner    {"params": {"username":"demo","password":"demo"}}
     @http.route('/res_partner', type='json', methods=['POST'], auth='user', csrf=False)
     def res_partner(self, **args):
@@ -58,4 +59,28 @@ class MyController(http.Controller):
         ids = models.execute_kw(db, uid, password, 'res.partner', 'search_read', 
             [[['is_company', '=', True], ['customer', '=', True]]], 
             {'fields': ['name', 'user_ids', 'email', 'image_small'], 'limit': 5})
+        return ids
+
+    @http.route('/image_of_res_user', type='json', methods=['POST'], auth='user', csrf=False)
+    def image_of_res_user(self, **args):
+        url = "http://localhost:8000"
+        db = "apidb"
+        username = args.get('username') # username
+        password = args.get('password') # password
+        common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
+        uid = common.authenticate(db, username, password, {})
+        models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
+
+        partner_ids = models.execute_kw(db, uid, password, 'res.users', 'search_read', 
+            [[['id', '=', uid]]], 
+            {'fields': ['partner_id'], 'limit': 1})
+        # print "====partner_ids====", partner_ids[0]['partner_id'][0]
+        ids_partner = models.execute_kw(db, uid, password, 'res.partner', 'search_read', 
+            [[['commercial_partner_id', '=', partner_ids[0]['partner_id'][0]]]], 
+            {'fields': ['name', 'user_ids', 'email', 'image_small','commercial_partner_id'], 'limit': 5})
+        # print "=====ids_partner======", ids_partner
+        ids = models.execute_kw(db, uid, password, 'res.users', 'search_read', 
+            [[['partner_id', '=', ids_partner[0]['commercial_partner_id'][0]]]], 
+            {'fields': ['image_small'], 'limit': 5})
+
         return ids
