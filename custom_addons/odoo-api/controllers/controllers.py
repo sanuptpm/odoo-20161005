@@ -22,7 +22,7 @@ class MyController(http.Controller):
             msg = "LOGIN_FAIL"
         return {"status": 0, "message": msg, "data": []}
 
-    # http://localhost:8000/sign_up   {"params": {"username":"demo","password":"demo","new_name":"name","new_login":"new3","new_password":"password"}}
+    # http://localhost:8000/sign_up   {"params": {"username":"demo","password":"demo","new_name":"name","new_login":"new3","new_password":"password","image":"/9j....."}}
     @http.route('/sign_up', type='json', methods=['POST'], auth='user', csrf=False)
     def sign_up(self, **args):
         myurs = request.env['res.users'].search([])
@@ -30,7 +30,7 @@ class MyController(http.Controller):
         db = "apidb"
         username = args.get('username') # username
         password = args.get('password') # password
-
+        img = args.get('image')
         new_name = args.get('new_name')
         new_login = args.get('new_login')
         new_password = args.get('new_password')
@@ -42,7 +42,7 @@ class MyController(http.Controller):
         for x in myurs:
             if x.login == new_login:
                 raise ValidationError("User already exists!")
-        new_user_id = models.execute_kw(db, uid, password, 'res.users', 'create', [{'name':new_name, 'login':new_login, 'new_password':new_password}])
+        new_user_id = models.execute_kw(db, uid, password, 'res.users', 'create', [{'name':new_name, 'login':new_login, 'new_password':new_password, 'image':img}])
         
         return {"status": 0, "message": new_user_id, "data": []}
 
@@ -77,10 +77,10 @@ class MyController(http.Controller):
         # print "====partner_ids====", partner_ids[0]['partner_id'][0]
         ids_partner = models.execute_kw(db, uid, password, 'res.partner', 'search_read', 
             [[['commercial_partner_id', '=', partner_ids[0]['partner_id'][0]]]], 
-            {'fields': ['name', 'user_ids', 'email', 'image_small','commercial_partner_id'], 'limit': 5})
+            {'fields': ['name', 'user_ids', 'email', 'image_medium','commercial_partner_id'], 'limit': 5})
         # print "=====ids_partner======", ids_partner
         ids = models.execute_kw(db, uid, password, 'res.users', 'search_read', 
             [[['partner_id', '=', ids_partner[0]['commercial_partner_id'][0]]]], 
-            {'fields': ['image_small'], 'limit': 5})
-
+            {'fields': ['image_medium'], 'limit': 5})
         return ids
+
