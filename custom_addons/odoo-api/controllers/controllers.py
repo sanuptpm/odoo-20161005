@@ -2,6 +2,7 @@
 from odoo import http
 from odoo.exceptions import ValidationError
 from odoo.http import request
+import werkzeug.contrib.sessions
 import xmlrpclib
 
 class MyController(http.Controller):
@@ -13,9 +14,13 @@ class MyController(http.Controller):
         db = "apidb"
         username = args.get('username') # username
         password = args.get('password') # password
-
+        # self.sessions = request.csrf_token()
         common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
         uid = common.authenticate(db, username, password, {}) # check user in model
+        models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
+        # Adding/Updating the token for session
+        models.execute_kw(db, uid, password, 'res.users', 'write', [[uid], 
+            {'session': request.csrf_token()}])
         if uid != False :
             msg = "SUCCESS_LOGIN"
         else:
@@ -84,3 +89,31 @@ class MyController(http.Controller):
             {'fields': ['image_medium'], 'limit': 5})
         return ids
 
+    @http.route('/partner_list', type='json', methods=['POST'], auth='user', csrf=True)
+    def partner_list(self, **args):
+        url = "http://localhost:8000"
+        db = "apidb"
+        username = args.get('username') # username
+        password = args.get('password') # password
+        # print "====self.sessions===", self.sessions
+        common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
+        uid = common.authenticate(db, username, password, {})
+        models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
+
+        partner_ids = models.execute_kw(db, uid, password, 'res.partner', 
+            'search', [[['is_company', '=', True], ['customer', '=', True]]])
+
+        return partner_ids
+    
+    @http.route('/log_out', type='json', methods=['POST'], auth='user', csrf=True)
+    def log_out(self, **args):
+        url = "http://localhost:8000"
+        db = "apidb"
+        username = args.get('username') # username
+        password = args.get('password') # password
+        common = xmlrpclib.ServerProxy('{}/xmlrpc/2/common'.format(url))
+        uid = common.authenticate(db, username, password, {}) # check user in model
+        models = xmlrpclib.ServerProxy('{}/xmlrpc/2/object'.format(url))
+        # Deleting/Updating the token for session
+        models.execute_kw(db, uid, password, 'res.users', 'write', [[uid], 
+            {'session': 0}])
