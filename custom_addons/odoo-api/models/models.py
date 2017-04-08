@@ -2,8 +2,8 @@
 
 from odoo import models, fields, api
 
-# class academy(models.Model):
-#     _name = 'academy.academy'
+# class odoo-api(models.Model):
+#     _name = 'odoo-api.odoo-api'
 
 #     name = fields.Char()
 #     value = fields.Integer()
@@ -14,7 +14,8 @@ from odoo import models, fields, api
 #     def _value_pc(self):
 #         self.value2 = float(self.value) / 100
 
-class Teachers(models.Model):
-    _name = 'academy.teachers'
+class SessionForUser(models.Model):
 
-    name = fields.Char()
+     _inherit = 'res.users'
+
+     session = fields.Char()

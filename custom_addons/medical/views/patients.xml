@@ -10,6 +10,7 @@
                     <header>
                         <!-- click button for generating print -->
                         <button name="%(report_patient)d" string="Patient Card" type="action" class="oe_highlight"/>
+                        
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
@@ -23,10 +24,10 @@
                             <button class="oe_stat_button" type="action" name="" icon="fa-truck">
                                 <field string="Vaccines" name="name" widget="statinfo"/>
                             </button>
-                            <button class="oe_stat_button" type="action" name="" icon="fa-truck">
+                            <button class="oe_stat_button" type="action" name="%(admisssion_form_action)d" icon="fa-truck">
                                 <field string="Admissions" name="name" widget="statinfo"/>
                             </button>
-                            <button class="oe_stat_button" type="action" name="" icon="fa-truck">
+                            <button class="oe_stat_button" type="action" name="%(patient_invoice_form_action)d" icon="fa-truck">
                                 <field string="Invoices" name="name" widget="statinfo"/>
                             </button>
                         </div>
@@ -36,10 +37,7 @@
                             <h1>
                                 <field name="name" default_focus="1" string=""/>
                             </h1>
-                            <!-- <label class="oe_edit_only" for="name" string="Type"/>
-                            <div class="o_row">
-                                <field name="type" placeholder="Type"/>
-                            </div> -->
+                            
                         </div>
 
                         <group>
@@ -59,12 +57,6 @@
 
                         <field name="file"/>
 
-                        <!-- ================================================================-->
-
-
-
-
-                        <!-- ====================================================== -->
                          <notebook>
                             <page string="Personal Information">
                                 <form>
@@ -75,7 +67,7 @@
                                                 <div>
                                                     <div class="o_address_format" name="div_address">
                                                         <field name="street" placeholder="Street..." class="o_address_street"/>
-                                                        <!-- <field name="street2" placeholder="Street..." class="o_address_street"/> -->
+                                                        
                                                         <field name="state_id" placeholder="State" class="o_address_state"/>
                                                         <field name="city" placeholder="City" class="o_address_city"/>
                                                         <field name="zip" placeholder="ZIP" class="o_address_zip"/>
@@ -260,11 +252,3 @@
 
     </data>
 </odoo>
-
-
-
-
-
-
-
-

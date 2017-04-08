@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- form view -->
+        <record model="ir.ui.view" id="patient_form_view">
+            <field name="name">patient.invoice.form</field>
+            <field name="model">medical.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Patient Invoice Form">
+                    <header>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="id" string="Inpatient"/>
+                            <h1>
+                                <field name="id"/>
+                            </h1> 
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="patient"/>
+                            </group>
+                        </group>
+
+                        <div class="oe_title">
+                            <h2>Dates</h2>
+                        </div>
+                        <group>
+                            <group>    
+                                <field name="hospitalization_date"/>
+                            </group>
+                            <group>
+                                <field name="discharge_date"/>
+                                <field name="days"/>
+
+                                <!-- <field name="reservation_charge"/> -->
+                            </group>
+                        </group>
+                                            
+                        <notebook>
+                            <page string="Invoice Lines">
+                                <group>
+                                    <field name="reservation_charge"/>
+                                </group>
+
+                                <group class="oe_subtotal_footer oe_right" 
+                                    colspan="2" name="sale_total">
+                                    <field name="untaxed_amount" widget="monetary" string="Untaxed Amount"/>
+                                    <field name="tax" widget="monetary" string="Taxes"/>
+                                    <field class="oe_subtotal_footer_separator oe_inline o_td_label" string="Total" name="total" widget="monetary"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="admisssion_tree_view">
+            <field name="name">admission.tree</field>
+            <field name="model">medical.invoice</field>
+            <field name="arch" type="xml">
+                <tree string="Admission Tree">
+                    <field name="id"/>
+                    <field name="patient"/>
+                    <field name="hospitalization_date"/>
+                    <field name="discharge_date"/>
+                    <field name="days"/>
+                    <field name="total"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- action window -->
+        <record model="ir.actions.act_window" id="patient_invoice_form_action">
+            <field name="name">Patient Invoice</field>
+            <field name="res_model">medical.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first Invoice
+                </p>
+            </field>
+        </record>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="main_medical_menu" name="Medical"/>
+
+        <menuitem id="patient_menu1" name="Admisssion Management " parent="main_medical_menu"/>
+        
+        <menuitem id="patient_invoice_menu" name="Patient Invoice" parent="patient_menu1"
+                  action="patient_invoice_form_action"/>
+
+    </data>
+</odoo>

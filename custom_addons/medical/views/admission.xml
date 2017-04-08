@@ -8,8 +8,13 @@
             <field name="arch" type="xml">
                 <form string="Admissions Form">
                     <header>
-                        <button string="Admit Now" type="object" name="state_change" class="oe_highlight"/>
+                        <button string="Admit Now" type="object" name="state_hospitalized" class="oe_highlight"/>
+                        <button string="Discharge" type="object" name="state_discharge" class="oe_highlight"/>
+                        <button string="Invoice" type="object" name="state_invoiced" class="oe_highlight"/>
+
                         <field name="state" widget="statusbar"/>
+
+                         <button name="get_upd" string="Create Invoice" type="object" context="{'id':'id'}"/>
                     </header>
                     <sheet>
                         <div class="oe_title">

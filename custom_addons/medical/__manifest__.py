@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','report',],
 
     # always loaded
     'data': [
@@ -35,7 +35,10 @@
         'views/pharmacies.xml',
         'views/patients.xml',
         'views/admission.xml',
+        'views/physicians.xml',
+        'views/patient_invoice.xml',
         'reports/reports.xml',
+        'reports/invoice_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

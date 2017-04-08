@@ -3,8 +3,6 @@
 from odoo import models, fields, api
 import datetime
 
-
-
 class HealthCenters(models.Model):
     _inherit = 'res.partner'
 
@@ -49,6 +47,7 @@ class Wards(models.Model):
     _name = 'medical.wards'
 
     name = fields.Char(string="Ward Name")
+    # image = fields.Boolean()
     health_center = fields.Many2one('res.partner', string="Health Center")
     floor_number = fields.Char(string="Floor Number")
     private_room = fields.Boolean(string="Private Room")
@@ -87,7 +86,7 @@ class Beds(models.Model):
     name = fields.Char(string="Bed Name")
     health_center = fields.Many2one('res.partner', string="Health Center")
     telephone_number = fields.Char(string="Telephone Number")
-    reservation_charge = fields.Char(string="Reservation Charge")
+    reservation_charge = fields.Char(string="Reservation Charge", default=100)
     building = fields.Many2one('medical.buildings', string="Building")
     ward = fields.Many2one('medical.wards', string="Ward")
     bed_type = fields.Selection([
@@ -249,7 +248,7 @@ class Admissions(models.Model):
     theaters = fields.Many2one('medical.theaters', string="Operating Theater")
     admission_type = fields.Char(string="Admission Type")
     attending_physician = fields.Char(string="Attending Physician")
-    operating_physician = fields.Char(string="Operating Physician")
+    operating_physician = fields.Many2one('medical.physicians', string="Operating Physician")
     queue = fields.Char(string="Queue")
     hospitalization_date = fields.Datetime(string="Hospitalization Date")
     discharge_date = fields.Datetime(string="Discharge Date")
@@ -263,40 +262,78 @@ class Admissions(models.Model):
         ], default='draft')
 
     @api.one
-    def state_change(self):
+    def state_hospitalized(self):
         self.write({
             'state': 'hospitalized',
             })
 
+    @api.one
+    def state_invoiced(self):
+        self.write({
+            'state': 'invoiced'
+            })
 
-    # Remarks     
-    # DM  
-    # Remarks     
-    # IHD     
-    # Remarks     
-    # Cold    
-    # Remarks     
-    # Hypertension    
-    # Remarks     
-    # Surgery     
-    # Remarks     
-    # Others
+    @api.one
+    def state_discharge(self):
+        self.write({
+            'state': 'discharge'
+            })
 
-    # Nsaids  
-    # Remarks     
-    # Aspirin     
-    # Remarks     
-    # Laxative    
-    # Remarks     
-    # Others 
+    @api.multi
+    def get_upd(self):
+        base_url = self.env['medical.invoice']
+        base_url.create({'reservation_charge': self.bed.reservation_charge, 
+            'patient': self.patient.name, 
+            'hospitalization_date': self.hospitalization_date, 
+            'discharge_date': self.discharge_date})
+        
 
-    # LMP     
-    # Date    
-    # Menorrhagia     
-    # Remarks     
-    # Dysmenorrhoea   
-    # Remarks     
-    # Bleeding PV     
-    # Remarks     
-    # Last PAP smear  
-    # Remarks     
+class Physicians(models.Model):
+    _name = 'medical.physicians'
+
+    name = fields.Char(string="Physician Name")
+    image = fields.Binary("Image", attachment=True)
+    speciality = fields.Char()
+    degree = fields.Char(string="Degrees")
+    graduation_institute = fields.Char(string="Graduation Institute")
+    consultancy_type = fields.Char(string="Consultancy Type")
+    consultancy_charge = fields.Char(string="Consultancy Charge", default=100)
+    licence_id = fields.Char(string="Licence ID")
+    working_institution = fields.Char(string="Working Institution")
+    work_mobile = fields.Char(string="Work Mobile")
+    work_email = fields.Char(string="Work Email")
+    responsible = fields.Char(string="Responsible")
+    work_phone = fields.Char(string="Work Phone")
+    work_location = fields.Char(string="Work Location")
+
+class PatientInvoice(models.Model):
+    _name = 'medical.invoice'
+    
+    patient = fields.Char(string="Patient Name")
+    hospitalization_date = fields.Char(string="Hospitalization Date")
+    discharge_date = fields.Char(string="Discharge Date")
+    reservation_charge = fields.Float(string="Reservation Charge")
+    days = fields.Integer(compute='_change')
+    untaxed_amount = fields.Integer(compute='_untax', string="Untaxed Amount")
+    tax = fields.Integer(compute='_untax', default=2)
+    total =fields.Integer(compute='_untax', default=1, string="Toatal")
+    doh = datetime.datetime.now()
+    dod = datetime.datetime.now()
+
+    @api.depends()
+    def _untax(self):
+        for x in self:
+            x.untaxed_amount = x.reservation_charge * x.days
+            x.tax = x.reservation_charge*2/100
+            x.total = x.untaxed_amount + x.tax
+
+    @api.depends()
+    def _change(self):
+        for l in self:
+            doh1 = datetime.datetime.strptime(l.hospitalization_date, '%Y-%m-%d %H:%M:%S')
+            dod1 = datetime.datetime.strptime(l.discharge_date, '%Y-%m-%d %H:%M:%S')
+
+            if int(doh1.strftime('%d')) == int(dod1.strftime('%d')):
+                l.days = 1 
+            else:
+                l.days = int(dod1.strftime('%d')) - int(doh1.strftime('%d'))
